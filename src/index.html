@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="header__left">
+          <div class="switches">
+            <button class="renovation-btn" data-id="update"></button>
+            <select class="lang-options">
+              <option selected>En</option>
+              <option>Ru</option>
+            </select>
+            <div class="temperature">
+              <button class="temperature__btn temperature__btn-left active">
+                F
+              </button>
+              <button class="temperature__btn temperature__btn-right">C</button>
+            </div>
+          </div>
+        </div>
+        <div class="header_right">
+          <input class="input-search" type="search" placeholder="Search city" />
+          <input class="input-search__btn" type="submit" value="Search" data-id="search" />
+        </div>
+      </header>
+
+      <main>
+        <div class="city-info">
+          <h1 class="city-info__title">Minsk, Belarus</h1>
+          <span class="city-info__cur-date"></span>
+        </div>
+        <div class="main-info__wrapper">
+          <section class="main-info__left">
+            <div class="main-info">
+              <div class="temperature-number">10</div>
+              <div class="temperature-info">
+                <img class="main-weather-img">
+                <span class="weather-type">overcast</span>
+                <span class="feels-like"></span>
+                <span class="wind">Wind: 2 m/s</span>
+                <span class="humidity">Humidity: 83%</span>
+              </div>
+            </div>
+            <ul class="temperature__list">
+              <li class="temperature__item">
+                <h3 class="temperature__item-title temperature__item-title-second"></h3>
+                <span class="second-day__temperature">7°</span>
+              </li>
+              <li class="temperature__item">
+                <h3 class="temperature__item-title temperature__item-title-third"></h3>
+                <span class="third-day__temperature">6°</span>
+              </li>
+              <li class="temperature__item">
+                <h3 class="temperature__item-title temperature__item-title-fourth"></h3>
+                <span class="fourth-day__temperature">3°</span>
+              </li>
+            </ul>
+          </section>
+          <section class="main-info__right">
+            <div class="city-map">
+              
+            </div>
+            <div class="coordinates">
+              <span>Latitude: 53°54'</span>
+              <span>Longitude: 27°34'</span>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

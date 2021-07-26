@@ -1,0 +1,348 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-width: 320px;
+  background-image: url("./img/background-img.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -5;
+}
+
+body::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(17, 17, 46, 0.46);
+  z-index: -1;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+  padding-top: 40px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 57px;
+}
+
+.header__left .switches {
+  display: flex;
+  justify-content: start;
+}
+
+.switches .renovation-btn {
+  padding: 0;
+  margin-right: 10px;
+  width: 44px;
+  height: 44px;
+  background: rgba(180, 184, 187, 0.4);
+  border-radius: 5px;
+  border: transparent;
+  cursor: pointer;
+  background-image: url("./img/refresh-btn.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.lang-options {
+  width: 71px;
+  height: 44px;
+  margin-right: 10px;
+  background: rgba(174, 181, 185, 0.5);
+  border-radius: 5px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.lang-options option {
+  background: rgba(174, 181, 185, 0.5);
+  border-radius: 5px;
+  border: transparent;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.temperature__btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  cursor: pointer;
+  border: transparent;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: rgba(174, 181, 185, 0.5);
+  border-radius: 5px;
+}
+
+.temperature__btn.active {
+  background: rgba(76, 82, 85, 0.4);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.temperature__btn::before {
+  content: "\00B0";
+}
+
+.header_right {
+  width: 375px;
+  height: 46px;
+  background: rgba(76, 82, 85, 0.4);
+  border: 1px solid rgba(228, 227, 227, 0.2);
+  border-radius: 5px;
+}
+
+.input-search {
+  position: relative;
+  width: 274px;
+  height: 44px;
+  padding: 0;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: transparent;
+  border: transparent;
+  outline: 0;
+  color: #ffffff;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.input-search::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 14px;
+  height: 16px;
+  background-image: url("./img/micro-img.svg");
+  background-repeat: no-repeat;
+}
+
+.input-search::placeholder {
+  color: #ffffff;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.input-search__btn {
+  padding: 0;
+  width: 95px;
+  background: rgba(174, 181, 185, 0.5);
+  border: transparent;
+  border-radius: 0 5px 5px 0;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 44px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.city-info__title {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 5px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 44px;
+  line-height: 54px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.city-info__cur-date {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #ffffff;
+}
+
+.main-info__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-info__left {
+  width: 600px;
+}
+
+.main-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.temperature-number {
+  display: inline-block;
+  position: relative;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 306px;
+  line-height: 373px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.temperature-number::before {
+  content: "\00B0";
+  position: absolute;
+  left: 100%;
+  top: -20%;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 100px;
+  text-transform: uppercase;
+  color: #ffffff;
+  z-index: 2;
+}
+
+.temperature-info {
+  display: inline-block;
+  position: relative;
+  margin-top: 15%;
+}
+
+.main-weather-img {
+  position: absolute;
+  top: -124%;
+  left: -35%;
+  width: 230px;
+  height: 230px;
+}
+
+.temperature-info span {
+  display: block;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 37px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.temperature__list {
+  display: flex;
+  justify-content: start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.temperature__item {
+  width: 160px;
+}
+
+.temperature__item + .temperature__item {
+  margin-left: 51px;
+}
+
+.temperature__item-title {
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 27px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.temperature__item span {
+  position: relative;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 80px;
+  line-height: 98px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.temperature__item span::after {
+  content: "";
+  position: absolute;
+  right: -60%;
+  width: 67px;
+  height: 47px;
+  background-image: url("./img/partially-cloudy.svg");
+  background-repeat: no-repeat;
+}
+
+.city-map {
+  width: 375px;
+  height: 398px;
+  border-radius: 5%;
+  background-color: grey;
+  margin-bottom: 20px;
+}
+
+.coordinates {
+  text-align: left;
+}
+
+.coordinates span {
+  display: block;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: right;
+  text-transform: capitalize;
+  color: #ffffff;
+}
