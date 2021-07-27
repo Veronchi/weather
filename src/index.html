@@ -24,7 +24,12 @@
         </div>
         <div class="header_right">
           <input class="input-search" type="search" placeholder="Search city" />
-          <input class="input-search__btn" type="submit" value="Search" data-id="search" />
+          <input
+            class="input-search__btn"
+            type="submit"
+            value="Search"
+            data-id="search"
+          />
         </div>
       </header>
 
@@ -38,7 +43,7 @@
             <div class="main-info">
               <div class="temperature-number">10</div>
               <div class="temperature-info">
-                <img class="main-weather-img">
+                <img class="main-weather-img" />
                 <span class="weather-type">overcast</span>
                 <span class="feels-like"></span>
                 <span class="wind">Wind: 2 m/s</span>
@@ -47,23 +52,36 @@
             </div>
             <ul class="temperature__list">
               <li class="temperature__item">
-                <h3 class="temperature__item-title temperature__item-title-second"></h3>
-                <span class="second-day__temperature">7°</span>
+                <h3
+                  class="temperature__item-title temperature__item-title-second"
+                ></h3>
+                <div class="temp-item-wrapper">
+                  <span class="second-day__temperature"></span>
+                  <img class="second-weather-img" />
+                </div>
               </li>
               <li class="temperature__item">
-                <h3 class="temperature__item-title temperature__item-title-third"></h3>
-                <span class="third-day__temperature">6°</span>
+                <h3
+                  class="temperature__item-title temperature__item-title-third"
+                ></h3>
+                <div class="temp-item-wrapper">
+                  <span class="third-day__temperature"></span>
+                  <img class="third-weather-img"/>
+                </div>
               </li>
               <li class="temperature__item">
-                <h3 class="temperature__item-title temperature__item-title-fourth"></h3>
-                <span class="fourth-day__temperature">3°</span>
+                <h3
+                  class="temperature__item-title temperature__item-title-fourth"
+                ></h3>
+                <div class="temp-item-wrapper">
+                  <span class="fourth-day__temperature"></span>
+                  <img class="fourth-weather-img"/>
+                </div>
               </li>
             </ul>
           </section>
           <section class="main-info__right">
-            <div class="city-map">
-              
-            </div>
+            <div class="city-map"></div>
             <div class="coordinates">
               <span>Latitude: 53°54'</span>
               <span>Longitude: 27°34'</span>

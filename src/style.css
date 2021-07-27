@@ -257,7 +257,7 @@ body::after {
 
 .main-weather-img {
   position: absolute;
-  top: -124%;
+  top: -140%;
   left: -35%;
   width: 230px;
   height: 230px;
@@ -283,7 +283,7 @@ body::after {
 }
 
 .temperature__item {
-  width: 160px;
+  width: 180px;
 }
 
 .temperature__item + .temperature__item {
@@ -302,8 +302,12 @@ body::after {
   color: #ffffff;
 }
 
-.temperature__item span {
+.temp-item-wrapper {
   position: relative;
+}
+
+.temperature__item span {
+  /* position: relative; */
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 600;
@@ -311,9 +315,15 @@ body::after {
   line-height: 98px;
   text-transform: uppercase;
   color: #ffffff;
+  z-index: 2;
 }
 
-.temperature__item span::after {
+.temperature__item img {
+  position: absolute;
+  top: -25px;
+  left: 95px;
+}
+/* .temperature__item span::after {
   content: "";
   position: absolute;
   right: -60%;
@@ -321,7 +331,7 @@ body::after {
   height: 47px;
   background-image: url("./img/partially-cloudy.svg");
   background-repeat: no-repeat;
-}
+} */
 
 .city-map {
   width: 375px;

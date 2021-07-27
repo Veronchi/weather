@@ -23,10 +23,11 @@ let selectorsObj = {
   thirdDaytitle: document.querySelector('.temperature__item-title-third'),
   fourDaytitle: document.querySelector('.temperature__item-title-fourth'),
   mainWeatherImg: document.querySelector('.main-weather-img'),
+  secondWeatherImg: document.querySelector('.second-weather-img'),
+  thirdWeatherImg: document.querySelector('.third-weather-img'),
+  fourthWeatherImg: document.querySelector('.fourth-weather-img'),
 }
 let model = {};
-
-console.log(selectorsObj.mainWeatherImg)
 
 body.addEventListener('click', clicker);
 
@@ -82,8 +83,13 @@ async function showWeather() {
   model.curDayFeelsLike = UTILS.getAverFeelsLike(weatherObj[currentDatePropName]);
   model.curDayWind = UTILS.getAverageWind(weatherObj[currentDatePropName]);
   model.curDayHumidity = UTILS.getAverageHumidity(weatherObj[currentDatePropName]);
+  model.curDayWeatherIcon = weatherObj[currentDatePropName][0].weather[0].icon;
+  model.secDayWeatherIcon = weatherObj[secDay][0].weather[0].icon;
+  model.thirdDayWeatherIcon = weatherObj[thirdDay][0].weather[0].icon;
+  model.fourthDayWeatherIcon = weatherObj[fourDay][0].weather[0].icon;
 
-  console.log(UTILS.getFollowingDayOfWeek(secDay))
+
+  console.log(model.secDayWeatherIcon)
 
   selectorsObj.mainTempNum.innerHTML = `${Math.round(model.curDayTemp)}`;
   selectorsObj.weatherType.innerHTML = `${weatherObj[currentDatePropName][0].weather[0].main}`;
@@ -96,7 +102,10 @@ async function showWeather() {
   selectorsObj.secDaytitle.innerHTML = UTILS.getFollowingDayOfWeek(secDay);
   selectorsObj.thirdDaytitle.innerHTML = UTILS.getFollowingDayOfWeek(thirdDay);
   selectorsObj.fourDaytitle.innerHTML = UTILS.getFollowingDayOfWeek(fourDay);
-  selectorsObj.mainWeatherImg.setAttribute('src', 'http://openweathermap.org/img/wn/10d@2x.png')
+  selectorsObj.mainWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.curDayWeatherIcon}@2x.png`);
+  selectorsObj.secondWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.secDayWeatherIcon}@2x.png`);
+  selectorsObj.thirdWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.thirdDayWeatherIcon}@2x.png`);
+  selectorsObj.fourthWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.fourthDayWeatherIcon}@2x.png`);
 }
 
 showWeather();
