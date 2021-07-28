@@ -26,6 +26,8 @@ let selectorsObj = {
   secondWeatherImg: document.querySelector('.second-weather-img'),
   thirdWeatherImg: document.querySelector('.third-weather-img'),
   fourthWeatherImg: document.querySelector('.fourth-weather-img'),
+  mainCountry: document.querySelector('.city-info__title-country'),
+  mainCity: document.querySelector('.city-info__title-city'),
 }
 let model = {};
 
@@ -65,8 +67,16 @@ async function toggleBackground(arg) {
 }
 
 
-async function showWeather() {
-  let weatherResponce = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=Minsk&lang=ru&units=metric&appid=30dcb6e81087042015db2109267eb343`);
+async function showWeather(location) {
+  let latitude = UTILS.getLatitude(location).toFixed(2);
+  let longitude = UTILS.getLongitude(location).toFixed(2);
+  
+  let locationResponce = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=5612c2d184e44e8cab607b333ed85a8d&l&language=en`);
+  let locationData = await locationResponce.json();
+
+  console.log(locationData)
+
+  let weatherResponce = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&lang=ru&units=metric&appid=30dcb6e81087042015db2109267eb343`);
   let weatherData = await weatherResponce.json();
 
   weatherObj = oWeatherToMyCustomObject(weatherData.list);
@@ -87,9 +97,9 @@ async function showWeather() {
   model.secDayWeatherIcon = weatherObj[secDay][0].weather[0].icon;
   model.thirdDayWeatherIcon = weatherObj[thirdDay][0].weather[0].icon;
   model.fourthDayWeatherIcon = weatherObj[fourDay][0].weather[0].icon;
+  model.curCountry = UTILS.getCountry(locationData);
+  model.curCity = UTILS.getCity(locationData);
 
-
-  console.log(model.secDayWeatherIcon)
 
   selectorsObj.mainTempNum.innerHTML = `${Math.round(model.curDayTemp)}`;
   selectorsObj.weatherType.innerHTML = `${weatherObj[currentDatePropName][0].weather[0].main}`;
@@ -106,9 +116,14 @@ async function showWeather() {
   selectorsObj.secondWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.secDayWeatherIcon}@2x.png`);
   selectorsObj.thirdWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.thirdDayWeatherIcon}@2x.png`);
   selectorsObj.fourthWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.fourthDayWeatherIcon}@2x.png`);
+  selectorsObj.mainCountry.innerHTML = `${model.curCountry}`;
+  selectorsObj.mainCity.innerHTML = `${model.curCity}`;
 }
 
-showWeather();
+navigator.geolocation.getCurrentPosition((data) => {
+  showWeather(data);
+});
+
 
 function oWeatherToMyCustomObject(arr) {
   let obj = {};

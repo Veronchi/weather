@@ -63,6 +63,26 @@ function getFollowingDayOfWeek(dayNum) {
   return days[dayNum];
 }
 
+function getLatitude(obj) {
+  return obj.coords.latitude;
+}
+
+function getLongitude(obj) {
+  return obj.coords.longitude;
+}
+
+function getCountry(obj) {
+  let country = obj.results[0].components.country;
+
+  return country;
+}
+
+function getCity(obj) {
+  let city = obj.results[0].components.city;
+
+  return city;
+}
+
 export {
   getToDay,
   getAverageTemp,
@@ -73,4 +93,8 @@ export {
   getMonth,
   getCorrectDayOfWeek,
   getFollowingDayOfWeek,
+  getLatitude,
+  getLongitude,
+  getCountry,
+  getCity,
 }
