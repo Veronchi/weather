@@ -28,6 +28,8 @@ let selectorsObj = {
   fourthWeatherImg: document.querySelector('.fourth-weather-img'),
   mainCountry: document.querySelector('.city-info__title-country'),
   mainCity: document.querySelector('.city-info__title-city'),
+  latitudeCoord: document.querySelector('.coordinates__latitude'),
+  longitudeCoord: document.querySelector('.coordinates__longitude'),
 }
 let model = {};
 
@@ -118,6 +120,8 @@ async function showWeather(location) {
   selectorsObj.fourthWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.fourthDayWeatherIcon}@2x.png`);
   selectorsObj.mainCountry.innerHTML = `${model.curCountry}`;
   selectorsObj.mainCity.innerHTML = `${model.curCity}`;
+  selectorsObj.latitudeCoord.innerHTML = `Latitude: ${latitude}`;
+  selectorsObj.longitudeCoord.innerHTML = `Longitude: ${longitude}`;
 }
 
 navigator.geolocation.getCurrentPosition((data) => {
