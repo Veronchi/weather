@@ -83,6 +83,18 @@ function getCity(obj) {
   return city;
 }
 
+function getLatCurd(obj) {
+  let latCurd = obj.results[0].annotations.DMS.lat;
+
+  return latCurd;
+}
+
+function getLonCurd(obj) {
+  let lonCurd = obj.results[0].annotations.DMS.lng;
+  
+  return lonCurd;
+}
+
 export {
   getToDay,
   getAverageTemp,
@@ -97,4 +109,6 @@ export {
   getLongitude,
   getCountry,
   getCity,
+  getLatCurd,
+  getLonCurd,
 }

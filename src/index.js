@@ -101,6 +101,8 @@ async function showWeather(location) {
   model.fourthDayWeatherIcon = weatherObj[fourDay][0].weather[0].icon;
   model.curCountry = UTILS.getCountry(locationData);
   model.curCity = UTILS.getCity(locationData);
+  model.curlat = UTILS.getLatCurd(locationData).slice(0, 7);
+  model.curlon = UTILS.getLonCurd(locationData).slice(0, 7);
 
 
   selectorsObj.mainTempNum.innerHTML = `${Math.round(model.curDayTemp)}`;
@@ -120,8 +122,8 @@ async function showWeather(location) {
   selectorsObj.fourthWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.fourthDayWeatherIcon}@2x.png`);
   selectorsObj.mainCountry.innerHTML = `${model.curCountry}`;
   selectorsObj.mainCity.innerHTML = `${model.curCity}`;
-  selectorsObj.latitudeCoord.innerHTML = `Latitude: ${latitude}`;
-  selectorsObj.longitudeCoord.innerHTML = `Longitude: ${longitude}`;
+  selectorsObj.latitudeCoord.innerHTML = `Latitude: ${model.curlat}`;
+  selectorsObj.longitudeCoord.innerHTML = `Longitude: ${model.curlon}`;
 }
 
 navigator.geolocation.getCurrentPosition((data) => {
