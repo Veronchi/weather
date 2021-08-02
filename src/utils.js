@@ -12,31 +12,30 @@ function getToDay(weatherObj, currentDate) {
 
 function getAverageTemp(arr) {
   let sumTemp = arr.reduce((sum, item) => sum + item.main.temp, 0);
-
-  let averTemp = sumTemp / (arr.length - 1);
-
+  let d = arr.length === 1 ? 1 : arr.length - 1;
+  let averTemp = sumTemp / d;
   return averTemp;
 }
 
 function getAverFeelsLike(arr) {
   let sumFeels = arr.reduce((sum, item) => sum + item.main.feels_like, 0);
-
-  let averFeels = sumFeels / (arr.length - 1);
+  let d = arr.length === 1 ? 1 : arr.length - 1;
+  let averFeels = sumFeels / d;
 
   return averFeels;
 }
 
 function getAverageWind(arr) {
   let sumWind = arr.reduce((sum, item) => sum + item.wind.speed, 0);
-
-  let averWind = sumWind / (arr.length - 1);
+  let d = arr.length === 1 ? 1 : arr.length - 1;
+  let averWind = sumWind / d;
   return averWind;
 }
 
 function getAverageHumidity(arr) {
   let sumHumid = arr.reduce((sum, item) => sum + item.main.humidity, 0);
-
-  let averHumid = sumHumid / (arr.length - 1);
+  let d = arr.length === 1 ? 1 : arr.length - 1;
+  let averHumid = sumHumid / d;
   return averHumid;
 }
 

@@ -20,6 +20,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "mapbox-gl": "^2.4.0"
   }
 }

@@ -2,6 +2,7 @@ import _, { cond, get, random } from 'lodash';
 import './fonts.css';
 import './style.css';
 import * as UTILS from './utils';
+import {getMap} from './map.js';
 
 let body = document.body;
 let inputValue = document.querySelector('.input-search').value;
@@ -70,16 +71,18 @@ async function toggleBackground(arg) {
 
 
 async function showWeather(location) {
-  let latitude = UTILS.getLatitude(location).toFixed(2);
-  let longitude = UTILS.getLongitude(location).toFixed(2);
+  let latitude = UTILS.getLatitude(location);
+  let longitude = UTILS.getLongitude(location);
+
   
   let locationResponce = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=5612c2d184e44e8cab607b333ed85a8d&l&language=en`);
   let locationData = await locationResponce.json();
 
-  console.log(locationData)
 
   let weatherResponce = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&lang=ru&units=metric&appid=30dcb6e81087042015db2109267eb343`);
   let weatherData = await weatherResponce.json();
+
+  getMap(longitude, latitude);
 
   weatherObj = oWeatherToMyCustomObject(weatherData.list);
   currentDatePropName = UTILS.getToDay(weatherObj, currentDate);

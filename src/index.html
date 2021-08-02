@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
   </head>
   <body>
     <div class="container">
@@ -81,7 +82,7 @@
             </ul>
           </section>
           <section class="main-info__right">
-            <div class="city-map"></div>
+            <div id="citymap_box" class="city-map"></div>
             <div class="coordinates">
               <span class="coordinates__latitude"></span>
               <span class="coordinates__longitude">Longitude: 27°34'</span>
