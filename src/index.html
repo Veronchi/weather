@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="container">
@@ -16,27 +19,23 @@
               <option>Ru</option>
             </select>
             <div class="temperature">
-              <button class="temperature__btn temperature__btn-left active">
-                F
-              </button>
+              <button class="temperature__btn temperature__btn-left active">F</button>
               <button class="temperature__btn temperature__btn-right">C</button>
             </div>
           </div>
         </div>
         <div class="header_right">
-          <input class="input-search" type="search" placeholder="Search city" />
-          <input
-            class="input-search__btn"
-            type="submit"
-            value="Search"
-            data-id="search"
-          />
+          <input class="input-search" type="search" placeholder="Search city"/>
+          <input class="input-search__btn" type="submit" value="Search" data-id="search"/>
         </div>
       </header>
 
       <main>
         <div class="city-info">
-          <h1 class="city-info__title"><span class="city-info__title-city"></span>, <span class="city-info__title-country"></span></h1>
+          <h1 class="city-info__title">
+            <span class="city-info__title-city"></span>,
+            <span class="city-info__title-country"></span>
+          </h1>
           <span class="city-info__cur-date"></span>
         </div>
         <div class="main-info__wrapper">
@@ -67,7 +66,7 @@
                 ></h3>
                 <div class="temp-item-wrapper">
                   <span class="third-day__temperature"></span>
-                  <img class="third-weather-img"/>
+                  <img class="third-weather-img" />
                 </div>
               </li>
               <li class="temperature__item">
@@ -76,7 +75,7 @@
                 ></h3>
                 <div class="temp-item-wrapper">
                   <span class="fourth-day__temperature"></span>
-                  <img class="fourth-weather-img"/>
+                  <img class="fourth-weather-img" />
                 </div>
               </li>
             </ul>

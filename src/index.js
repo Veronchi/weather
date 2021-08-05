@@ -5,7 +5,7 @@ import * as UTILS from './utils';
 import {getMap} from './map.js';
 
 let body = document.body;
-let inputValue = document.querySelector('.input-search').value;
+let inputSearch = document.querySelector('.input-search');
 let weatherObj = null;
 let currentDate = null;
 let currentDatePropName = null;
@@ -45,7 +45,8 @@ function clicker(event) {
       break;
 
     case "search":
-      toggleBackground(id);
+      toggleBackground(id, inputSearch.value);
+      changeInputValueWeather(inputSearch.value);
       break;
 
     default:
@@ -53,10 +54,10 @@ function clicker(event) {
   }
 }
 
-async function toggleBackground(arg) {
+async function toggleBackground(arg, query) {
   let url = 'https://api.unsplash.com/photos/random';
   if (arg !== "update") {
-    url = `https://api.unsplash.com/photos/random?query=${inputValue}`;
+    url = `https://api.unsplash.com/photos/random?query=${query}`;
   };
   let responce = await fetch(url, {
     method: 'GET',
@@ -179,3 +180,65 @@ function changeCurTime() {
   currentDate = changeCurTime();
   setInterval(changeCurTime, 1000);
 })()
+
+async function changeInputValueWeather(data) {
+  let inputWeatherResponce = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${data}&lang=ru&units=metric&appid=30dcb6e81087042015db2109267eb343`);
+  let inputWeatherData = await inputWeatherResponce.json();
+
+  weatherObj = oWeatherToMyCustomObject(inputWeatherData.list);
+  let inputLatitude = UTILS.getInputLat(inputWeatherData);
+  let inputLongitude = UTILS.getInputLon(inputWeatherData);
+
+  let inputLocationResponce = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${inputLatitude}+${inputLongitude}&key=5612c2d184e44e8cab607b333ed85a8d&l&language=en`);
+  let inputLocationData = await inputLocationResponce.json();
+  
+  console.log(inputWeatherData)
+  getMap(inputLongitude, inputLatitude);
+
+  currentDatePropName = UTILS.getToDay(weatherObj, currentDate);
+  model.curDayTemp = UTILS.getAverageTemp(weatherObj[currentDatePropName]);
+
+  selectorsObj.mainTempNum.innerHTML = `${Math.round(model.curDayTemp)}`;
+  let secDay = UTILS.getCorrectDayOfWeek(+currentDatePropName + 1);
+  let thirdDay = UTILS.getCorrectDayOfWeek(+currentDatePropName + 2);
+  let fourDay = UTILS.getCorrectDayOfWeek(+currentDatePropName + 3);
+
+  model.secDayT = UTILS.getAverageTemp(weatherObj[secDay]);
+  model.thirdDayT = UTILS.getAverageTemp(weatherObj[thirdDay]);
+  model.fourDayT = UTILS.getAverageTemp(weatherObj[fourDay]);
+  model.curDayFeelsLike = UTILS.getAverFeelsLike(weatherObj[currentDatePropName]);
+  model.curDayWind = UTILS.getAverageWind(weatherObj[currentDatePropName]);
+  model.curDayHumidity = UTILS.getAverageHumidity(weatherObj[currentDatePropName]);
+  model.curDayWeatherIcon = weatherObj[currentDatePropName][0].weather[0].icon;
+  model.secDayWeatherIcon = weatherObj[secDay][0].weather[0].icon;
+  model.thirdDayWeatherIcon = weatherObj[thirdDay][0].weather[0].icon;
+  model.fourthDayWeatherIcon = weatherObj[fourDay][0].weather[0].icon;
+  model.curCountry = UTILS.getCountry(inputLocationData);
+  model.curCity = UTILS.getCity(inputLocationData);
+  model.curlat = UTILS.getLatCurd(inputLocationData).slice(0, 7);
+  model.curlon = UTILS.getLonCurd(inputLocationData).slice(0, 7);
+
+  selectorsObj.mainTempNum.innerHTML = `${Math.round(model.curDayTemp)}`;
+  selectorsObj.weatherType.innerHTML = `${weatherObj[currentDatePropName][0].weather[0].main}`;
+  selectorsObj.feelsLike.innerHTML = `Feels like: ${Math.round(model.curDayFeelsLike)}°`;
+  selectorsObj.secondDayTemp.innerHTML = `${Math.round(model.secDayT)}°`;
+  selectorsObj.thirdDayTemp.innerHTML = `${Math.round(model.thirdDayT)}°`;
+  selectorsObj.fourthdDayTemp.innerHTML = `${Math.round(model.fourDayT)}°`;
+  selectorsObj.wind.innerHTML = `Wind: ${Math.round(model.curDayWind)} m/s`;
+  selectorsObj.humidity.innerHTML = `Humidity: ${Math.round(model.curDayHumidity)}%`;
+  selectorsObj.secDaytitle.innerHTML = UTILS.getFollowingDayOfWeek(secDay);
+  selectorsObj.thirdDaytitle.innerHTML = UTILS.getFollowingDayOfWeek(thirdDay);
+  selectorsObj.fourDaytitle.innerHTML = UTILS.getFollowingDayOfWeek(fourDay);
+  selectorsObj.mainWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.curDayWeatherIcon}@2x.png`);
+  selectorsObj.secondWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.secDayWeatherIcon}@2x.png`);
+  selectorsObj.thirdWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.thirdDayWeatherIcon}@2x.png`);
+  selectorsObj.fourthWeatherImg.setAttribute('src', `http://openweathermap.org/img/wn/${model.fourthDayWeatherIcon}@2x.png`);
+  selectorsObj.mainCountry.innerHTML = `${model.curCountry}`;
+  selectorsObj.mainCity.innerHTML = `${model.curCity}`;
+  selectorsObj.latitudeCoord.innerHTML = `Latitude: ${model.curlat}`;
+  selectorsObj.longitudeCoord.innerHTML = `Longitude: ${model.curlon}`;
+}
+
+
+
+// new york

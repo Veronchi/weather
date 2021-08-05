@@ -94,6 +94,18 @@ function getLonCurd(obj) {
   return lonCurd;
 }
 
+function getInputLat(obj) {
+  let inputLat = obj.city.coord.lat;
+
+  return inputLat;
+}
+
+function getInputLon(obj) {
+  let inputLon = obj.city.coord.lon;
+
+  return inputLon;
+}
+
 export {
   getToDay,
   getAverageTemp,
@@ -110,4 +122,6 @@ export {
   getCity,
   getLatCurd,
   getLonCurd,
+  getInputLat,
+  getInputLon,
 }
