@@ -106,6 +106,35 @@ function getInputLon(obj) {
   return inputLon;
 }
 
+function getInputDate(offset) {
+  let time = new Date().getTime() + (offset * 1000);
+  let inputDate = new Date(time);
+
+  let month = getMonth(inputDate.getUTCMonth());
+  let dayOfWeek = getCurDayOfWeek(inputDate.getUTCDay());
+  let dayNum = inputDate.getUTCDate();
+  let hours = inputDate.getUTCHours();
+  let minutes = inputDate.getUTCMinutes();
+  let curMinutes = null;
+
+  if(minutes < 10) {
+    curMinutes = `0${minutes}`
+  } else {
+    curMinutes = minutes;
+  }
+
+  let inputTime = `${dayOfWeek} ${dayNum} ${month} ${hours}:${curMinutes}`;
+
+  // console.log(time);
+  // console.log(inputDate);
+  // console.log(inputDate.getUTCDay());
+  // console.log(new Date(inputDate.toUTCString() - objTimestamp.offset_sec));
+  // console.log(inputTime)
+  return inputTime;
+}
+
+
+// new york
 export {
   getToDay,
   getAverageTemp,
@@ -124,4 +153,5 @@ export {
   getLonCurd,
   getInputLat,
   getInputLon,
+  getInputDate,
 }

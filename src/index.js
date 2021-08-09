@@ -9,6 +9,7 @@ let inputSearch = document.querySelector('.input-search');
 let weatherObj = null;
 let currentDate = null;
 let currentDatePropName = null;
+let GLOBALoffset = null;
 
 
 let selectorsObj = {
@@ -31,6 +32,7 @@ let selectorsObj = {
   mainCity: document.querySelector('.city-info__title-city'),
   latitudeCoord: document.querySelector('.coordinates__latitude'),
   longitudeCoord: document.querySelector('.coordinates__longitude'),
+  cityInfoCurDate: document.querySelector('.city-info__cur-date'),
 }
 let model = {};
 
@@ -46,7 +48,7 @@ function clicker(event) {
 
     case "search":
       toggleBackground(id, inputSearch.value);
-      changeInputValueWeather(inputSearch.value);
+      changeAppByInput(inputSearch.value);
       break;
 
     default:
@@ -155,33 +157,34 @@ function oWeatherToMyCustomObject(arr) {
 
 function changeCurTime() {
   let date = new Date();
-  let cityInfoCurDate = document.querySelector('.city-info__cur-date');
-
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  let dayOfWeek = UTILS.getCurDayOfWeek(date.getDay());
-  let dayOfMonth = date.getDate();
-  let month = UTILS.getMonth(date.getMonth());
-  let curTime = null;
-
-  if (minutes < 10) {
-    curTime = `${hours}:0${minutes}`;
+  if(!GLOBALoffset) {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let dayOfWeek = UTILS.getCurDayOfWeek(date.getDay());
+    let dayOfMonth = date.getDate();
+    let month = UTILS.getMonth(date.getMonth());
+    let curTime = null;
+  
+    if (minutes < 10) {
+      curTime = `${hours}:0${minutes}`;
+    } else {
+      curTime = `${hours}:${minutes}`;
+    }
+    selectorsObj.cityInfoCurDate.innerHTML = `${dayOfWeek} ${dayOfMonth} ${month} ${curTime}`;
   } else {
-    curTime = `${hours}:${minutes}`;
+    selectorsObj.cityInfoCurDate.innerHTML = UTILS.getInputDate(GLOBALoffset);
   }
-  cityInfoCurDate.innerHTML = `${dayOfWeek} ${dayOfMonth} ${month} ${curTime}`;
+  
 
   return date;
 }
-
-
 
 (function () {
   currentDate = changeCurTime();
   setInterval(changeCurTime, 1000);
 })()
 
-async function changeInputValueWeather(data) {
+async function changeAppByInput(data) {
   let inputWeatherResponce = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${data}&lang=ru&units=metric&appid=30dcb6e81087042015db2109267eb343`);
   let inputWeatherData = await inputWeatherResponce.json();
 
@@ -191,8 +194,9 @@ async function changeInputValueWeather(data) {
 
   let inputLocationResponce = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${inputLatitude}+${inputLongitude}&key=5612c2d184e44e8cab607b333ed85a8d&l&language=en`);
   let inputLocationData = await inputLocationResponce.json();
+  GLOBALoffset = inputLocationData.results[0].annotations.timezone.offset_sec;
   
-  console.log(inputWeatherData)
+  console.log(inputLocationData)
   getMap(inputLongitude, inputLatitude);
 
   currentDatePropName = UTILS.getToDay(weatherObj, currentDate);
