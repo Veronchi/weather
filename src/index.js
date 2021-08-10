@@ -9,7 +9,10 @@ let inputSearch = document.querySelector('.input-search');
 let weatherObj = null;
 let currentDate = null;
 let currentDatePropName = null;
+let inputLatitude = null;
+let inputLongitude = null;
 let GLOBALoffset = null;
+let GLOBALmap = null;
 
 
 let selectorsObj = {
@@ -64,7 +67,7 @@ async function toggleBackground(arg, query) {
   let responce = await fetch(url, {
     method: 'GET',
     headers: {
-      Authorization: 'Client-ID Jcf2ZUAFlrURxEhOl7gKOltoDnU1U732BnMmRbvY4-4'
+      Authorization: process.env.API_KEY_UNSPLASH
     }
   });
   let data = await responce.json();
@@ -78,14 +81,14 @@ async function showWeather(location) {
   let longitude = UTILS.getLongitude(location);
 
   
-  let locationResponce = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=5612c2d184e44e8cab607b333ed85a8d&l&language=en`);
+  let locationResponce = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.API_KEY_OPENCAGEDATA}&l&language=en`);
   let locationData = await locationResponce.json();
 
 
-  let weatherResponce = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&lang=ru&units=metric&appid=30dcb6e81087042015db2109267eb343`);
+  let weatherResponce = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&lang=ru&units=metric&appid=${process.env.API_KEY_WEATHER}`);
   let weatherData = await weatherResponce.json();
 
-  getMap(longitude, latitude);
+  GLOBALmap = getMap(longitude, latitude);
 
   weatherObj = oWeatherToMyCustomObject(weatherData.list);
   currentDatePropName = UTILS.getToDay(weatherObj, currentDate);
@@ -189,15 +192,19 @@ async function changeAppByInput(data) {
   let inputWeatherData = await inputWeatherResponce.json();
 
   weatherObj = oWeatherToMyCustomObject(inputWeatherData.list);
-  let inputLatitude = UTILS.getInputLat(inputWeatherData);
-  let inputLongitude = UTILS.getInputLon(inputWeatherData);
+  inputLatitude = UTILS.getInputLat(inputWeatherData);
+  inputLongitude = UTILS.getInputLon(inputWeatherData);
 
   let inputLocationResponce = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${inputLatitude}+${inputLongitude}&key=5612c2d184e44e8cab607b333ed85a8d&l&language=en`);
   let inputLocationData = await inputLocationResponce.json();
   GLOBALoffset = inputLocationData.results[0].annotations.timezone.offset_sec;
-  
-  console.log(inputLocationData)
-  getMap(inputLongitude, inputLatitude);
+
+  GLOBALmap.flyTo({
+    center: [
+      inputLongitude, inputLatitude
+    ],
+    essential: true // this animation is considered essential with respect to prefers-reduced-motion
+  })
 
   currentDatePropName = UTILS.getToDay(weatherObj, currentDate);
   model.curDayTemp = UTILS.getAverageTemp(weatherObj[currentDatePropName]);

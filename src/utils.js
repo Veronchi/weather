@@ -125,11 +125,6 @@ function getInputDate(offset) {
 
   let inputTime = `${dayOfWeek} ${dayNum} ${month} ${hours}:${curMinutes}`;
 
-  // console.log(time);
-  // console.log(inputDate);
-  // console.log(inputDate.getUTCDay());
-  // console.log(new Date(inputDate.toUTCString() - objTimestamp.offset_sec));
-  // console.log(inputTime)
   return inputTime;
 }
 
