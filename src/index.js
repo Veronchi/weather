@@ -2,7 +2,7 @@ import _, { cond, get, random } from 'lodash';
 import './fonts.css';
 import './style.css';
 import * as UTILS from './utils';
-import {getMap} from './map.js';
+import { getMap } from './map.js';
 
 let body = document.body;
 let inputSearch = document.querySelector('.input-search');
@@ -13,6 +13,8 @@ let inputLatitude = null;
 let inputLongitude = null;
 let GLOBALoffset = null;
 let GLOBALmap = null;
+let globalLangEn = null;
+let globalLangRu = null;
 
 
 let selectorsObj = {
@@ -36,10 +38,15 @@ let selectorsObj = {
   latitudeCoord: document.querySelector('.coordinates__latitude'),
   longitudeCoord: document.querySelector('.coordinates__longitude'),
   cityInfoCurDate: document.querySelector('.city-info__cur-date'),
+  langOptions: document.querySelector('.lang-options'),
 }
 let model = {};
 
 body.addEventListener('click', clicker);
+
+selectorsObj.langOptions.addEventListener('change', (e) => {
+  console.log(e.target.value)
+});
 
 function clicker(event) {
   let id = event.target.dataset.id;
@@ -80,19 +87,19 @@ async function showWeather(location) {
   let latitude = UTILS.getLatitude(location);
   let longitude = UTILS.getLongitude(location);
 
-  
+
   let locationResponce = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.API_KEY_OPENCAGEDATA}&l&language=en`);
   let locationData = await locationResponce.json();
 
 
-  let weatherResponce = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&lang=ru&units=metric&appid=${process.env.API_KEY_WEATHER}`);
+  let weatherResponce = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&lang=en&units=metric&appid=${process.env.API_KEY_WEATHER}`);
   let weatherData = await weatherResponce.json();
 
   GLOBALmap = getMap(longitude, latitude);
 
   weatherObj = oWeatherToMyCustomObject(weatherData.list);
   currentDatePropName = UTILS.getToDay(weatherObj, currentDate);
-  
+
   model.curDayTemp = UTILS.getAverageTemp(weatherObj[currentDatePropName]);
   let secDay = UTILS.getCorrectDayOfWeek(+currentDatePropName + 1);
   let thirdDay = UTILS.getCorrectDayOfWeek(+currentDatePropName + 2);
@@ -160,14 +167,14 @@ function oWeatherToMyCustomObject(arr) {
 
 function changeCurTime() {
   let date = new Date();
-  if(!GLOBALoffset) {
+  if (!GLOBALoffset) {
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let dayOfWeek = UTILS.getCurDayOfWeek(date.getDay());
     let dayOfMonth = date.getDate();
     let month = UTILS.getMonth(date.getMonth());
     let curTime = null;
-  
+
     if (minutes < 10) {
       curTime = `${hours}:0${minutes}`;
     } else {
@@ -177,7 +184,7 @@ function changeCurTime() {
   } else {
     selectorsObj.cityInfoCurDate.innerHTML = UTILS.getInputDate(GLOBALoffset);
   }
-  
+
 
   return date;
 }
